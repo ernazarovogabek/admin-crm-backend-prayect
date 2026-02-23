@@ -26,13 +26,23 @@ const LoginPage = () => {
     setError("");
 
     try {
+      console.log("Login ma'lumotlari:", { email, password });
+      
       const res = await axios.post(
         "/api/auth/sign-in",
         { email, password }
       );
 
+      console.log("Backend javobi:", res.data);
+
       const token = res.data?.data?.token;
       const user = res.data?.data?.user;
+
+      if (!token) {
+        console.error("Token topilmadi:", res.data);
+        setError("Login muvaffaqiyatsiz. Token topilmadi.");
+        return;
+      }
 
       // LocalStorage va Cookie ga saqlash
       localStorage.setItem("token", token);
@@ -41,14 +51,21 @@ const LoginPage = () => {
 
       router.push("/dashboard");
     } catch (err: any) {
-      setError(err.response?.data?.message || "Email yoki parol xato");
+      console.error("Login xatolik:", err);
+      console.error("Xatolik ma'lumotlari:", err.response?.data);
+      console.error("Status:", err.response?.status);
+      
+      const errorMessage = err.response?.data?.message || 
+                          err.response?.data?.error || 
+                          "Email yoki parol xato";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 relative">
+    <div className="h-auto flex items-center justify-center bg-gray-100 dark:bg-gray-900 relative">
       {/* Theme Toggle Button */}
       <button
         onClick={toggleTheme}
@@ -62,7 +79,7 @@ const LoginPage = () => {
         )}
       </button>
 
-      <div className="w-full max-w-sm h-[420px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm p-6">
+      <div className="w-full max-w-sm h-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm p-6">
         <h1 className="text-xl items-center justify-center font-semibold flex text-gray-800 dark:text-gray-100 mb-5">
           Xush kelibsiz 👋
         </h1>

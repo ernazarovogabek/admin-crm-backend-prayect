@@ -42,6 +42,10 @@ export default function Login() {
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.response?.data?.message || "Email yoki parol xato");
+      // Xato bo'lganda eski tokenlarni o'chirish
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     } finally {
       setLoading(false);
     }
@@ -62,7 +66,7 @@ export default function Login() {
         )}
       </button>
 
-      <div className="w-full max-w-sm h-[420px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm p-6">
+      <div className="w-full max-w-sm h-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm p-6">
         <h1 className="text-xl items-center justify-center font-semibold flex text-gray-800 dark:text-gray-100 mb-5">
           Xush kelibsiz 👋
         </h1>
@@ -106,7 +110,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white text-sm font-medium rounded-xl transition disabled:opacity-60"
+            className="w-full py-4 h-12 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {loading ? "Kirilmoqda..." : "Kirish"}
           </button>

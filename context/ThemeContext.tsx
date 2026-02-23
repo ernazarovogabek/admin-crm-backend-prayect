@@ -13,17 +13,27 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<string>('light')
 
   useEffect(() => {
-    // LocalStorage dan theme ni o'qish
+    // Page load da theme ni set qilish
     const savedTheme = localStorage.getItem('theme') || 'light'
     setTheme(savedTheme)
-    document.documentElement.classList.toggle('dark', savedTheme === 'dark')
+    applyTheme(savedTheme)
   }, [])
+
+  const applyTheme = (newTheme: string) => {
+    const root = document.documentElement
+    if (newTheme === 'dark') {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
+  }
 
   const toggleTheme = (): void => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
     setTheme(newTheme)
     localStorage.setItem('theme', newTheme)
-    document.documentElement.classList.toggle('dark', newTheme === 'dark')
+    applyTheme(newTheme)
+    console.log('Theme changed to:', newTheme) // Debug uchun
   }
 
   return (
@@ -36,7 +46,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+    return {
+      theme: 'light',
+      toggleTheme: () => {}
+    };
   }
   return context;
 }

@@ -5,11 +5,20 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://admin-crm.onrender.c
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    
-    const response = await fetch(`${API_URL}/api/auth/sign-in`, {
+    const token = request.headers.get('authorization')
+
+    if (!token) {
+      return NextResponse.json(
+        { message: 'Token topilmadi' },
+        { status: 401 }
+      )
+    }
+
+    const response = await fetch(`${API_URL}/api/auth/edit-profile`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': token,
       },
       body: JSON.stringify(body),
     })
@@ -22,6 +31,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(data)
   } catch (error) {
+    console.error('Profil tahrirlashda xatolik:', error)
     return NextResponse.json(
       { message: 'Server xatosi' },
       { status: 500 }

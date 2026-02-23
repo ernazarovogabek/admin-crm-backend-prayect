@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
+import { useSidebar } from '@/context/SidebarContext'
 
 const links = [
   { to: '/dashboard', label: 'Asosiy' },
@@ -21,6 +22,7 @@ function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
   const { logout } = useAuth()
+  const { isOpen } = useSidebar()
 
   const handleLogout = () => {
     logout()
@@ -30,10 +32,10 @@ function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-white shadow-md dark:bg-[#141414]">
+    <aside className={`${isOpen ? 'w-64' : 'w-0'} bg-white shadow-md dark:bg-[#141414] transition-all duration-300 overflow-hidden`}>
       <nav className="flex flex-col p-4 space-y-2">
-        <h1 className="text-[20px] font-bold mb-[20px] text-white">Admin CRM</h1>
-        <p className="text-[18px] font-semibold mb-[1px] text-white">Menu</p>
+        <h1 className="text-[20px] font-bold mb-[20px] text-gray-900 dark:text-white">Admin CRM</h1>
+        <p className="text-[18px] font-semibold mb-[1px] text-gray-900 dark:text-white">Menu</p>
 
         {links.map((link) => {
           const isActive = pathname === link.to
