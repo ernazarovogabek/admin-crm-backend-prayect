@@ -1,0 +1,47 @@
+import { toast as reactToast } from 'react-toastify';
+
+export const toast = {
+    success: (message: string) => {
+        reactToast.success(message, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    },
+
+    error: (message: string) => {
+        reactToast.error(message, {
+            position: 'top-right',
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    },
+
+    info: (message: string) => {
+        reactToast.info(message, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    },
+
+    warning: (message: string) => {
+        reactToast.warning(message, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    },
+};

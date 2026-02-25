@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://admin-crm.onrender.com'
+const API_URL = process.env.API_URL || 'https://admin-crm.onrender.com'
 
 export async function GET(
   request: NextRequest,
@@ -11,7 +11,11 @@ export async function GET(
     const pathStr = path.join('/')
     const token = request.headers.get('authorization')
 
-    const response = await fetch(`${API_URL}/api/staff/${pathStr}`, {
+    console.log('Staff API Route - GET:', pathStr);
+    console.log('Token:', token ? 'Mavjud' : 'Yo\'q');
+    console.log('Full URL:', `${API_URL}/staff/${pathStr}`);
+
+    const response = await fetch(`${API_URL}/staff/${pathStr}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -19,9 +23,12 @@ export async function GET(
       },
     })
 
+    console.log('Backend response status:', response.status);
+
     const data = await response.json()
     return NextResponse.json(data, { status: response.status })
   } catch (error) {
+    console.error('Staff API Route Error:', error);
     return NextResponse.json({ message: 'Server xatosi' }, { status: 500 })
   }
 }
@@ -36,7 +43,7 @@ export async function POST(
     const token = request.headers.get('authorization')
     const body = await request.json()
 
-    const response = await fetch(`${API_URL}/api/staff/${pathStr}`, {
+    const response = await fetch(`${API_URL}/staff/${pathStr}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +76,7 @@ export async function DELETE(
       // Body bo'lmasa, davom etamiz
     }
 
-    const response = await fetch(`${API_URL}/api/staff/${pathStr}`, {
+    const response = await fetch(`${API_URL}/staff/${pathStr}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -95,7 +102,7 @@ export async function PUT(
     const token = request.headers.get('authorization')
     const body = await request.json()
 
-    const response = await fetch(`${API_URL}/api/staff/${pathStr}`, {
+    const response = await fetch(`${API_URL}/staff/${pathStr}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

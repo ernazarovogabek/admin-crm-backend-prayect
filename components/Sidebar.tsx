@@ -4,29 +4,34 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
 import { useSidebar } from '@/context/SidebarContext'
-
-const links = [
-  { to: '/dashboard', label: 'Asosiy' },
-  { to: '/menegerlar', label: 'Menegerlar' },
-  { to: '/adminlar', label: 'Adminlar' },
-  { to: '/ustozlar', label: 'Ustozlar' },
-  { to: '/studentlar', label: 'Studentlar' },
-  { to: '/guruhlar', label: 'Guruhlar' },
-  { to: '/kurslar', label: 'Kurslar' },
-  { to: '/payment', label: 'Payment' },
-  { to: '/profile', label: 'Profil' },
-  { to: '/sozlamalar', label: 'Sozlamalar' },
-]
+import { useLanguage } from '@/context/LanguageContext'
+import { Home, Users, UserCog, GraduationCap, User, UsersRound, BookOpen, Wallet, UserCircle, Settings, LogOut } from 'lucide-react'
 
 function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
   const { logout } = useAuth()
   const { isOpen } = useSidebar()
+  const { t } = useLanguage()
+
+  const links = [
+    { to: '/dashboard', label: t('dashboard'), icon: Home },
+    { to: '/menegerlar', label: t('managers'), icon: Users },
+    { to: '/adminlar', label: t('admins'), icon: UserCog },
+    { to: '/ustozlar', label: t('teachers'), icon: GraduationCap },
+    { to: '/studentlar', label: t('students'), icon: User },
+    { to: '/guruhlar', label: t('groups'), icon: UsersRound },
+    { to: '/kurslar', label: t('courses'), icon: BookOpen },
+    { to: '/payment', label: t('payments'), icon: Wallet },
+  ]
+
+  const otherLinks = [
+    { to: '/sozlamalar', label: t('settings'), icon: Settings },
+    { to: '/profile', label: t('profile'), icon: UserCircle },
+  ]
 
   const handleLogout = () => {
     logout()
-    // Cookie ni o'chirish
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
     router.push('/login')
   }
@@ -39,16 +44,37 @@ function Sidebar() {
 
         {links.map((link) => {
           const isActive = pathname === link.to
+          const Icon = link.icon
           return (
             <Link
               key={link.to}
               href={link.to}
-              className={`px-4 py-2 rounded text-sm font-medium ${
-                isActive
+              className={`flex items-center gap-3 px-4 py-2 rounded text-sm font-medium ${isActive
                   ? 'bg-black text-white dark:bg-white dark:text-black'
                   : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/10'
-              }`}
+                }`}
             >
+              <Icon size={20} />
+              {link.label}
+            </Link>
+          )
+        })}
+
+        <p className="text-[18px] font-semibold mb-[1px] mt-4 text-gray-900 dark:text-white">Boshqalar</p>
+
+        {otherLinks.map((link) => {
+          const isActive = pathname === link.to
+          const Icon = link.icon
+          return (
+            <Link
+              key={link.to}
+              href={link.to}
+              className={`flex items-center gap-3 px-4 py-2 rounded text-sm font-medium ${isActive
+                  ? 'bg-black text-white dark:bg-white dark:text-black'
+                  : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/10'
+                }`}
+            >
+              <Icon size={20} />
               {link.label}
             </Link>
           )
@@ -56,8 +82,9 @@ function Sidebar() {
 
         <button
           onClick={handleLogout}
-          className="px-4 py-2 rounded text-sm font-medium text-red-600 hover:bg-red-100 dark:hover:bg-red-900 transition text-left"
+          className="flex items-center gap-3 px-4 py-2 rounded text-sm font-medium text-red-600 hover:bg-red-100 dark:hover:bg-red-900 transition text-left"
         >
+          <LogOut size={20} />
           Chiqish
         </button>
       </nav>

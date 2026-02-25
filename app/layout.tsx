@@ -2,6 +2,7 @@
 
 import { AuthProvider } from '@/context/AuthContext'
 import { ThemeProvider } from '@/context/ThemeContext'
+import QueryProvider from '@/context/QueryProvider'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '@/styles/globals.css'
@@ -31,12 +32,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body suppressHydrationWarning>
-        <ThemeProvider>
-          <AuthProvider>
-            {children}
-            <ToastContainer position="top-right" autoClose={3000} theme="light" />
-          </AuthProvider>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              {children}
+              <ToastContainer position="top-right" autoClose={3000} theme="light" />
+            </AuthProvider>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   )

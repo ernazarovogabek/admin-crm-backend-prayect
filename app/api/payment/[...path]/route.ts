@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://admin-crm.onrender.com'
+const API_URL = process.env.API_URL || 'https://admin-crm.onrender.com'
 
 export async function GET(
   request: NextRequest,
@@ -15,8 +15,8 @@ export async function GET(
     // Query parametrlarini olish
     const queryString = searchParams.toString()
     const url = queryString 
-      ? `${API_URL}/api/payment/${pathStr}?${queryString}`
-      : `${API_URL}/api/payment/${pathStr}`
+      ? `${API_URL}/payment/${pathStr}?${queryString}`
+      : `${API_URL}/payment/${pathStr}`
 
     const response = await fetch(url, {
       method: 'GET',
@@ -43,7 +43,7 @@ export async function POST(
     const token = request.headers.get('authorization')
     const body = await request.json()
 
-    const response = await fetch(`${API_URL}/api/payment/${pathStr}`, {
+    const response = await fetch(`${API_URL}/payment/${pathStr}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export async function DELETE(
       // Body bo'lmasa, davom etamiz
     }
 
-    const response = await fetch(`${API_URL}/api/payment/${pathStr}`, {
+    const response = await fetch(`${API_URL}/payment/${pathStr}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export async function PUT(
     const token = request.headers.get('authorization')
     const body = await request.json()
 
-    const response = await fetch(`${API_URL}/api/payment/${pathStr}`, {
+    const response = await fetch(`${API_URL}/payment/${pathStr}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://admin-crm.onrender.com'
+const API_URL = process.env.API_URL || 'https://admin-crm.onrender.com'
 
 export async function GET(
   request: NextRequest,
@@ -11,7 +11,7 @@ export async function GET(
     const pathStr = path.join('/')
     const token = request.headers.get('authorization')
 
-    const response = await fetch(`${API_URL}/api/teacher/${pathStr}`, {
+    const response = await fetch(`${API_URL}/teacher/${pathStr}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export async function POST(
     const token = request.headers.get('authorization')
     const body = await request.json()
 
-    const response = await fetch(`${API_URL}/api/teacher/${pathStr}`, {
+    const response = await fetch(`${API_URL}/teacher/${pathStr}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export async function DELETE(
       // Body bo'lmasa, davom etamiz
     }
 
-    const response = await fetch(`${API_URL}/api/teacher/${pathStr}`, {
+    const response = await fetch(`${API_URL}/teacher/${pathStr}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export async function PUT(
     const token = request.headers.get('authorization')
     const body = await request.json()
 
-    const response = await fetch(`${API_URL}/api/teacher/${pathStr}`, {
+    const response = await fetch(`${API_URL}/teacher/${pathStr}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

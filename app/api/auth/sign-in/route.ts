@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://admin-crm.onrender.com'
+const API_URL = process.env.API_URL || 'https://admin-crm.onrender.com'
 
 export async function POST(request: NextRequest) {
   try {
