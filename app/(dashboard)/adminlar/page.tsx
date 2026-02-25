@@ -124,6 +124,10 @@ export default function AdminlarPage() {
     createMutation.mutate(newAdmin);
   };
 
+
+
+
+  
   const handleEditAdmin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingAdmin) return;
